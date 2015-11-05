@@ -9,8 +9,8 @@ std::vector<Move *> Rook::makeMove() {
     std::vector<Move *> moves;
     int i = 0;
 
-    /* Movimiento Horizontal y Vertical */
     for (i = -7; i < 7; ++i) {
+        /* Movimiento Horizontal y Vertical */
         pushToMoves(moves, i + x, y);
         pushToMoves(moves, x, y + i);
     }

@@ -7,6 +7,8 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Game.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/game/Game.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Helper.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Helper.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/piece/bishop/Bishop.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/piece/bishop/Bishop.h" isTestSource="false" />

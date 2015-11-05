@@ -12,6 +12,7 @@ std::vector<Move *> Bishop::makeMove() {
     std::vector<Move *> moves;
 
     for (int i = -7; i < 7; ++i) {
+        /* Movimiento Diagonal */
         pushToMoves(moves, x - i, y + i);
         pushToMoves(moves, x + i, y + i);
     }
