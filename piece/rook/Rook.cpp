@@ -9,8 +9,7 @@
 std::vector<Move *> *Rook::makeMove(Piece **matrix) {
     std::vector<Move *> *moves = new std::vector<Move *>();
 
-    /** Horizontal right **/
-    for (int i = 1; i < 1000; ++i) {
+    for (int i = 1; i < 8; ++i) {
         pushToMoves(moves, i + x, y);
         if (matrix[y * 8 + (i + x)] != nullptr) {
             break;
