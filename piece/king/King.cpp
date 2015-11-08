@@ -5,8 +5,8 @@
 #include <vector>
 #include "King.h"
 
-std::vector<Move *> King::makeMove() {
-    std::vector<Move *> moves;
+std::vector<Move *> *King::makeMove(Piece **matrix) {
+    std::vector<Move *> *moves = new std::vector<Move *>();
 
     pushToMoves(moves, x + 1, y);
     pushToMoves(moves, x + 1, y + 1);

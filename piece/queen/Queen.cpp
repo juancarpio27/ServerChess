@@ -5,22 +5,64 @@
 #include "Queen.h"
 #include <vector>
 
-std::vector<Move *> Queen::makeMove() {
-    std::vector<Move *> moves;
+std::vector<Move *> *Queen::makeMove(Piece **matrix) {
+    std::vector<Move *> *moves = new std::vector<Move *>();
 
-    int i = 0;
-
-    for (i = -7; i < 7; ++i) {
-        /* Movimiento Diagonal */
-        pushToMoves(moves, x - i, y + i);
-        pushToMoves(moves, x + i, y + i);
-
-        /* Movimiento Horizontal y Vertical */
+    /** Horizontal right **/
+    for (int i = 1; i < 8; ++i) {
         pushToMoves(moves, i + x, y);
-        pushToMoves(moves, x, y + i);
-
+        if (matrix[y * 8 + (i + x)] != nullptr) {
+            break;
+        }
     }
 
+    /** Horizontal left **/
+    for (int i = -1; i > -8; --i) {
+        pushToMoves(moves, i + x, y);
+        if (matrix[y * 8 + (i + x)] != nullptr) {
+            break;
+        }
+    }
+
+    /** Vertical down **/
+    for (int i = 1; i < 8; ++i) {
+        pushToMoves(moves, x, y + i);
+        if (matrix[(y + i) * 8 + x] != nullptr) {
+            break;
+        }
+    }
+
+    /** Vertical up **/
+    for (int i = -1; i > -8; --i) {
+        pushToMoves(moves, x, y + i);
+        if (matrix[(y + i) * 8 + x] != nullptr) {
+            break;
+        }
+    }
+
+    for (int i = 1; i < 7; ++i) {
+        pushToMoves(moves, x - i, y - i);
+        if (matrix[(y - i) * 8 + (x - i)] != nullptr)
+            break;
+    }
+
+    for (int i = 1; i < 7; ++i) {
+        pushToMoves(moves, x + i, y + i);
+        if (matrix[(y + i) * 8 + (x + i)] != nullptr)
+            break;
+    }
+
+    for (int i = 1; i < 7; ++i) {
+        pushToMoves(moves, x - i, y + i);
+        if (matrix[(y + i) * 8 + (x - i)] != nullptr)
+            break;
+    }
+
+    for (int i = 1; i < 7; ++i) {
+        pushToMoves(moves, x + i, y - i);
+        if (matrix[(y - i) * 8 + (x + i)] != nullptr)
+            break;
+    }
 
     return moves;
 }

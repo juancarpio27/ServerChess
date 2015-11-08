@@ -4,8 +4,8 @@
 
 #include "Knight.h"
 
-std::vector<Move *> Knight::makeMove() {
-    std::vector<Move *> moves;
+std::vector<Move *> *Knight::makeMove(Piece **matrix) {
+    std::vector<Move *> *moves = new std::vector<Move *>();
 
     pushToMoves(moves, x + 1, y + 2);
     pushToMoves(moves, x + 2, y + 1);

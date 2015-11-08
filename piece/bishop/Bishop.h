@@ -4,16 +4,18 @@
 
 #ifndef CHESS_SOLVER_BISHOP_H
 #define CHESS_SOLVER_BISHOP_H
-
+#define BISHOP 4
 
 #include <vector>
 #include "../Piece.h"
 
+
+
 class Bishop : public Piece {
 public:
-    Bishop(int _x, int _y, Color _color) :  Piece(_x, _y, _color) { }
+    Bishop(int _x, int _y, Color _color) :  Piece(_x, _y, _color, BISHOP) { }
 
-    std::vector<Move *> makeMove();
+    std::vector<Move *> *makeMove(Piece **matrix);
 };
 
 

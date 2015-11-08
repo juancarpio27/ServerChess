@@ -11,31 +11,40 @@
 
 class Piece {
 protected:
+    int type;
     int x;
     int y;
     Color color;
 public:
     Piece() { }
 
-    Piece(int _x, int _y, Color _color) : x(_x), y(_y), color(_color) { }
+    Piece(int _x, int _y, Color _color, int _type) : x(_x), y(_y), color(_color), type(_type) { }
 
     Piece(int _x, int _y) : x(_x), y(_y) { }
 
-    virtual bool pushToMoves(std::vector<Move *> moves, int _x, int _y);
+    virtual bool pushToMoves(std::vector<Move *> *moves, int _x, int _y);
 
-    virtual bool pushToMoves(std::vector<Move *> moves, int _x, int _y, bool needsPiece);
+    virtual bool pushToMoves(std::vector<Move *> *moves, int _x, int _y, bool needsPiece);
 
-    virtual std::vector<Move *> makeMove();
+    virtual std::vector<Move *> *makeMove(Piece **matrix);
 
-    virtual int getX();
+    int getType();
 
-    virtual int getY();
+    void setType(int value);
+
+    int getX();
+
+    void setX(int value);
+
+    int getY();
+
+    void setY(int value);
 
     virtual bool isKing();
 
     virtual Color getColor();
 
-    inline bool operator==(const Piece& rhs){ return x == rhs.x && y == rhs.y; }
+    inline bool operator==(const Piece &rhs) { return x == rhs.x && y == rhs.y; }
 };
 
 

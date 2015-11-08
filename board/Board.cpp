@@ -5,26 +5,49 @@
 #include <iostream>
 #include "Board.h"
 #include "../Helper.h"
-#include "../piece/bishop/Bishop.h"
 
-Board::Board(Piece *piece, std::vector<Move *> moves) {
-    if (turn == WHITE) {
-        turn = BLACK;
-    } else {
-        turn = WHITE;
-    }
-
-    removeInvalidMoves(piece, moves);
-    removeOverlappingPieces(piece, moves);
-    if (isInCheck()) {
-        std::cout << "in check moder focker" << std::endl;
-    } else {
-        execute();
-    }
+/*Board::Board(Piece *piece, std::vector<Move *> moves) {
     //isInCheckmate();
+}*/
+
+Board *Board::createBoard(Piece *piece, Move *move) {
+    Color turnColor = turn == WHITE ? BLACK : WHITE;
+
+    Board *board = new Board(turnColor, turnsLeft - 1);
+
+    for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
+        Piece *newPiece = new Piece();
+        *newPiece = **it;
+        board->pushPiece(newPiece);
+    }
+
+    for (std::vector<Piece *>::iterator it = blackPieces.begin(); it != blackPieces.end(); ++it) {
+        Piece *newPiece = new Piece();
+        *newPiece = **it;
+        if (*it == piece) {
+            newPiece->setX(move->getX());
+            newPiece->setY(move->getY());
+        }
+        board->pushPiece(newPiece);
+    }
+
+    return board;
 }
 
 void Board::execute() {
+    if (isInCheck()) {
+        printf("The board is in check\n");
+    }
+    else {
+        printf("The board is not in check\n");
+    }
+
+    if (isInCheckmate()) {
+        printf("The board is in checkmate\n");
+    }
+    else {
+        printf("The board is not in checkmate\n");
+    }
     std::vector<Piece *> pieces;
     if (turn == WHITE) {
         pieces = whitePieces;
@@ -32,8 +55,13 @@ void Board::execute() {
         pieces = blackPieces;
     }
 
-    for (std::vector<Piece *>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
-        std::vector<Move *> moves = (*it)->makeMove();
+    for (std::vector<Piece *>::iterator pieceIt = pieces.begin(); pieceIt != pieces.end(); ++pieceIt) {
+        std::vector<Move *> *moves = (*pieceIt)->makeMove(getMatrix());
+        //removeInvalidMoves(*pieceIt, moves);
+        for (std::vector<Move *>::iterator moveIt = moves->begin(); moveIt != moves->end(); ++moveIt) {
+            Board *board = createBoard(*pieceIt, *moveIt);
+            //board->execute();
+        }
     }
 }
 
@@ -49,21 +77,26 @@ void Board::clean() {
 
 }
 
-Piece *Board::getMatrix() {
+Piece **Board::getMatrix() {
     if (matrix == nullptr) {
-        matrix = new Piece[64];
-        //std::fill(matrix, matrix + sizeof(matrix), 0);
+        matrix = new Piece *[64];
         for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
-            Piece * piece = matrix + (*it)->getX() * 8 + (*it)->getY();
-            *piece = **it;
+            matrix[(*it)->getY() * 8 + (*it)->getX()] = *it;
         }
 
         for (std::vector<Piece *>::iterator it = blackPieces.begin(); it != blackPieces.end(); ++it) {
-            Piece * piece = matrix + (*it)->getX() * 8 + (*it)->getY();
-            *piece = **it;
+            matrix[(*it)->getY() * 8 + (*it)->getX()] = *it;
         }
     }
     return matrix;
+}
+
+
+void Board::invalidateMatrix() {
+    if (matrix != nullptr) {
+        delete matrix;
+        matrix = nullptr;
+    }
 }
 
 Piece *Board::getWhiteKing() {
@@ -96,78 +129,100 @@ Piece *Board::getBlackKing() {
     return blackKing;
 }
 
-void Board::removeInvalidMoves(Piece *piece, std::vector<Move *> moves) {
+void Board::removeInvalidMoves(Piece *piece, std::vector<Move *> *moves) {
     removeOverlappingPieces(piece, moves);
     removeCheckMoves(moves);
 }
 
-void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> moves) {
-    Piece *matrix = getMatrix();
-    for (std::vector<Move *>::iterator it = moves.begin(); it != moves.end(); ++it) {
+void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves) {
+    Piece **matrix = getMatrix();
+    for (std::vector<Move *>::iterator it = moves->begin(); it != moves->end(); ++it) {
         Move *move = *it;
-        Piece *otherPiece = matrix + move->getY() * 8 + move->getX();
+        Piece *otherPiece = matrix[move->getY() * 8 + move->getX()];
         if (otherPiece != nullptr) {
             if (piece->getColor() == otherPiece->getColor()) {
-                moves.erase(it);
-            }
-        } else {
-            if (otherPiece->getColor() == WHITE) {
-                remove(blackPieces, otherPiece);
+                moves->erase(it);
+                --it;
             } else {
-                remove(whitePieces, otherPiece);
+                if (otherPiece->getColor() == WHITE) {
+                    remove(blackPieces, otherPiece);
+                } else {
+                    remove(whitePieces, otherPiece);
+                }
             }
         }
     }
 }
 
 bool Board::isInCheck() {
-    isInCheck(getBlackKing());
-    isInCheck(getWhiteKing());
-}
-
-bool Board::isInCheck(Piece *king) {
-    Piece *matrix = getMatrix();
-
-    isInCheckWithPieces(king, whitePieces);
-    isInCheckWithPieces(king, blackPieces);
-
-    return false;
+    bool inCheck = false;
+    inCheck = inCheck || isInCheckWithPieces(getBlackKing(), whitePieces);
+    inCheck = inCheck || isInCheckWithPieces(getWhiteKing(), blackPieces);
+    return inCheck;
 }
 
 bool Board::isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces) {
-    Piece *matrix = getMatrix();
+    Piece **matrix = getMatrix();
 
+    printf("king x: %d, y: %d\n", king->getX(), king->getY());
     for (std::vector<Piece *>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
-        std::vector<Move *> moves = (*it)->makeMove();
-        for (std::vector<Move *>::iterator move = moves.begin(); move != moves.end(); ++move) {
-            if (matrix + (*move)->getY() * 8 + (*move)->getX() == king) {
+        std::vector<Move *> *moves = (*it)->makeMove(getMatrix());
+        removeInvalidMoves(*it, moves);
+        for (std::vector<Move *>::iterator move = moves->begin(); move != moves->end(); ++move) {
+            printf("move x: %d, y: %d\n", (*move)->getX(), (*move)->getY());
+            if (king->getX() == (*move)->getX() && king->getY() == (*move)->getY()) {
+                printf("ASDASD - move x: %d, y: %d\n", (*move)->getX(), (*move)->getY());
                 return true;
             }
         }
+        delete moves;
     }
 
     return false;
 }
 
 bool Board::isInCheckmate() {
-
-    return false;
+    bool inCheck = true;
+    inCheck = isInCheckmateWithPieces(getBlackKing(), whitePieces);
+    //inCheck = inCheck && isInCheckmateWithPieces(getWhiteKing(), blackPieces);
+    return inCheck;
 }
 
+bool Board::isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces) {
+    std::vector<Move *> *moves = king->makeMove(getMatrix());
+    removeInvalidMoves(king, moves);
+    for (std::vector<Move *>::iterator move = moves->begin(); move != moves->end(); ++move) {
+        invalidateMatrix();
+        int x = king->getX();
+        int y = king->getY();
+        king->setX((*move)->getX());
+        king->setY((*move)->getY());
+        printf("CHECKING checkmate\n");
+        bool inCheck = isInCheckWithPieces(king, pieces);
+        king->setX(x);
+        king->setY(y);
+        if (!inCheck) {
+            return false;
+        } else {
+            printf("in checkmate\n");
+        }
+    }
+    return true;
+}
 
-void Board::removeCheckMoves(std::vector<Move *> moves) {
+void Board::removeCheckMoves(std::vector<Move *> *moves) {
 
 }
 
-void  Board::removePieceEatingMoves(std::vector<Move *> moves) {
+void  Board::removePieceEatingMoves(std::vector<Move *> *moves) {
 
 }
 
 std::ostream &operator<<(std::ostream &out, Board &board) {
-    Piece *matrix = board.getMatrix();
+    Piece **matrix = board.getMatrix();
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            int num = matrix + j * 8 + i == NULL ? 1 : 0;
+            int num = *(matrix + j * 8 + i) == nullptr ? 1 : 0;
             out << num;
         }
         out << std::endl;

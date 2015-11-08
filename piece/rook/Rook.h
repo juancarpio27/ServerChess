@@ -5,13 +5,16 @@
 #ifndef CHESS_SOLVER_ROOK_H
 #define CHESS_SOLVER_ROOK_H
 
+#define ROOK 3
 
 #include "../Piece.h"
 #include <vector>
 
 class Rook : public Piece {
 public:
-    std::vector<Move *> makeMove();
+    Rook(int _x, int _y, Color _color) :  Piece(_x, _y, _color, ROOK) { }
+
+    std::vector<Move *> *makeMove(Piece **matrix);
 };
 
 

@@ -13,40 +13,45 @@ class Board {
 private:
     std::vector<Piece *> whitePieces;
     std::vector<Piece *> blackPieces;
-    Piece *matrix;
+    Piece **matrix;
     Color turn;
     Move *moves;
     Piece *whiteKing;
     Piece *blackKing;
+    int turnsLeft;
 
-    void removeInvalidMoves(Piece *piece, std::vector<Move *> moves);
+    void removeInvalidMoves(Piece *piece, std::vector<Move *> *moves);
 
-    void removeOverlappingPieces(Piece *piece, std::vector<Move *> moves);
+    void removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves);
 
-    void removeCheckMoves(std::vector<Move *> moves);
+    void removeCheckMoves(std::vector<Move *> *moves);
 
-    void removePieceEatingMoves(std::vector<Move *> moves);
-
-    bool isInCheck();
+    void removePieceEatingMoves(std::vector<Move *> *moves);
 
     bool isInCheckmate();
 
-    bool isInCheck(Piece *king);
+    bool isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces);
 
     Piece *getWhiteKing();
 
     Piece *getBlackKing();
 
-    Piece *getMatrix();
+    Piece **getMatrix();
+
+    void invalidateMatrix();
 
     bool isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces);
 
-public:
-    Board() : turn(WHITE) { }
+    Board *createBoard(Piece *piece, Move *move);
 
-    Board(Piece *piece, std::vector<Move *> moves);
+public:
+    Board(Color _turn, int _turnsLeft) : turn(_turn), turnsLeft(_turnsLeft) { }
+
+    Board(Piece *piece, std::vector<Move *> *moves);
 
     void execute();
+
+    bool isInCheck();
 
     void pushPiece(Piece *piece);
 
