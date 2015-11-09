@@ -44,9 +44,11 @@ void Board::execute() {
 
     if (isInCheckmate()) {
         printf("The board is in checkmate\n");
+        std::cout << *(this);
     }
     else {
         printf("The board is not in checkmate\n");
+        std::cout << *(this);
     }
     std::vector<Piece *> pieces;
     if (turn == WHITE) {
@@ -163,15 +165,12 @@ bool Board::isInCheck() {
 
 bool Board::isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces) {
     Piece **matrix = getMatrix();
-
-    printf("king x: %d, y: %d\n", king->getX(), king->getY());
     for (std::vector<Piece *>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
         std::vector<Move *> *moves = (*it)->makeMove(getMatrix());
         removeInvalidMoves(*it, moves);
         for (std::vector<Move *>::iterator move = moves->begin(); move != moves->end(); ++move) {
-            printf("move x: %d, y: %d\n", (*move)->getX(), (*move)->getY());
+            printf("Move %d/%d\n",(*move)->getX(),(*move)->getY());
             if (king->getX() == (*move)->getX() && king->getY() == (*move)->getY()) {
-                printf("ASDASD - move x: %d, y: %d\n", (*move)->getX(), (*move)->getY());
                 return true;
             }
         }
@@ -184,27 +183,28 @@ bool Board::isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces) {
 bool Board::isInCheckmate() {
     bool inCheck = true;
     inCheck = isInCheckmateWithPieces(getBlackKing(), whitePieces);
-    //inCheck = inCheck && isInCheckmateWithPieces(getWhiteKing(), blackPieces);
-    return inCheck;
+    //inCheck = inCheck || isInCheckmateWithPieces(getWhiteKing(), blackPieces);
+    return inCheck && isInCheck();
 }
 
 bool Board::isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces) {
     std::vector<Move *> *moves = king->makeMove(getMatrix());
     removeInvalidMoves(king, moves);
     for (std::vector<Move *>::iterator move = moves->begin(); move != moves->end(); ++move) {
-        invalidateMatrix();
+        //invalidateMatrix();
         int x = king->getX();
         int y = king->getY();
         king->setX((*move)->getX());
         king->setY((*move)->getY());
-        printf("CHECKING checkmate\n");
+        *(matrix + y * 8 + x) = nullptr;
+        printf("Checking the king in %d/%d\n",king->getX(),king->getY());
         bool inCheck = isInCheckWithPieces(king, pieces);
         king->setX(x);
         king->setY(y);
+        *(matrix + y * 8 + x) = king;
+
         if (!inCheck) {
             return false;
-        } else {
-            printf("in checkmate\n");
         }
     }
     return true;
