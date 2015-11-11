@@ -21,11 +21,11 @@ int Game::execute() {
 }
 
 bool Game::init() {
-    /*board = new Board(WHITE, 1);
-    board->pushPiece(new Rook(4, 7, WHITE));
-    board->pushPiece(new Rook(4, 6, WHITE));
+    board = new Board(BLACK, 40);
+    board->pushPiece(new Rook(7, 6, WHITE));
+    board->pushPiece(new Rook(5, 2, WHITE));
     board->pushPiece(new King(5, 5, WHITE));
-    board->pushPiece(new King(7, 7, BLACK));*/
+    board->pushPiece(new King(7, 7, BLACK));
     //CHECKMATE
      /*board = new Board(WHITE, 1);
       board->pushPiece(new Bishop(1, 1, WHITE));
@@ -42,7 +42,7 @@ bool Game::init() {
     board->pushPiece(new King(0, 0, BLACK)); 
     board->pushPiece(new King(2, 1, WHITE));
      board->pushPiece(new Knight(2, 0, WHITE));
-     board->pushPiece(new Bishop(5, 5, WHITE));*/
+     board->pushPiece(new Bishop(6, 4, WHITE));*/
     /*board = new Board(WHITE, 1); 
     board->pushPiece(new King(0, 4, BLACK)); 
     board->pushPiece(new King(2, 4, WHITE));
@@ -52,8 +52,7 @@ bool Game::init() {
     board->pushPiece(new Queen(1, 4, WHITE));
      board->pushPiece(new King(2, 5, WHITE));*/
 
-
-
+    return true;
 }
 
 void Game::clean() {

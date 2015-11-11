@@ -13,7 +13,13 @@ class King : public Piece {
 public:
     King(int _x, int _y, Color _color) : Piece(_x, _y, _color, KING) { }
 
+    King(Piece *old_piece, Move* move) : Piece(old_piece, move) { }
+
+    King(Piece *old_piece) : Piece(old_piece) { printf("Construyendo al rey"); }
+
     std::vector<Move *> *makeMove(Piece **matrix);
+
+    Piece* newPiece();
 
     bool isKing();
 };

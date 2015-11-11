@@ -42,3 +42,7 @@ std::vector<Move *> *Rook::makeMove(Piece **matrix) {
 
     return moves;
 }
+
+Piece* Rook::newPiece() {
+    return new Rook(x,y,color);
+}

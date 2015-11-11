@@ -12,7 +12,7 @@ std::vector<Move *> *King::makeMove(Piece **matrix) {
     pushToMoves(moves, x + 1, y + 1);
     pushToMoves(moves, x + 1, y - 1);
     pushToMoves(moves, x - 1, y);
-    pushToMoves(moves, x, y);
+    //pushToMoves(moves, x, y);
     pushToMoves(moves, x - 1, y + 1);
     pushToMoves(moves, x - 1, y - 1);
     pushToMoves(moves, x, y + 1);
@@ -23,4 +23,8 @@ std::vector<Move *> *King::makeMove(Piece **matrix) {
 
 bool King::isKing() {
     return true;
+}
+
+Piece* King::newPiece() {
+    return new King(x,y,color);
 }

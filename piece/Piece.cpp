@@ -6,6 +6,20 @@
 #include "Piece.h"
 #include "Move.h"
 
+Piece::Piece(Piece *old_piece, Move* move){
+    this->x = move->getX();
+    this->y = move->getY();
+    this->color = old_piece->getColor();
+    this->type = old_piece->getType();
+}
+
+Piece::Piece(Piece *old_piece){
+    this->x = old_piece->getX();
+    this->y = old_piece->getY();
+    this->color = old_piece->getColor();
+    this->type = old_piece->getType();
+}
+
 bool Piece::pushToMoves(std::vector<Move *> *moves, int _x, int _y) {
     if (_x < 8 && _x >= 0 && _y < 8 && _y >= 0) {
         moves->push_back(new Move(_x, _y));
@@ -55,5 +69,9 @@ Color Piece::getColor() {
 }
 
 std::vector<Move *> *Piece::makeMove(Piece **matrix) {
+
+}
+
+Piece* Piece::newPiece() {
 
 }

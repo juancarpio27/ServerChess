@@ -19,14 +19,11 @@ private:
     Piece *whiteKing;
     Piece *blackKing;
     int turnsLeft;
+    int winner;
 
     void removeInvalidMoves(Piece *piece, std::vector<Move *> *moves);
 
     void removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves);
-
-    void removeCheckMoves(std::vector<Move *> *moves);
-
-    void removePieceEatingMoves(std::vector<Move *> *moves);
 
     bool isInCheckmate();
 
@@ -38,11 +35,17 @@ private:
 
     Piece **getMatrix();
 
+    std::vector<Piece *> getBlackPieces();
+
+    std::vector<Piece *> getWhitePieces();
+
     void invalidateMatrix();
 
     bool isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces);
 
-    Board *createBoard(Piece *piece, Move *move);
+    Board *createBoard(Piece *piece, Move *move, bool incheck, int turns);
+
+    bool finalReached();
 
 public:
     Board(Color _turn, int _turnsLeft) : turn(_turn), turnsLeft(_turnsLeft) { }

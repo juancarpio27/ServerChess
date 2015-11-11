@@ -22,11 +22,17 @@ public:
 
     Piece(int _x, int _y) : x(_x), y(_y) { }
 
+    Piece(Piece *old_piece, Move* move);
+
+    Piece(Piece *old_piece);
+
     virtual bool pushToMoves(std::vector<Move *> *moves, int _x, int _y);
 
     virtual bool pushToMoves(std::vector<Move *> *moves, int _x, int _y, bool needsPiece);
 
     virtual std::vector<Move *> *makeMove(Piece **matrix);
+
+    virtual Piece *newPiece();
 
     int getType();
 
