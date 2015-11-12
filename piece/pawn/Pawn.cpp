@@ -9,14 +9,13 @@ std::vector<Move *> *Pawn::makeMove(Piece **matrix) {
 
     int factor = (color == WHITE) ? 1 : -1;
 
-    if (matrix[(y + factor) * 8 + x] == nullptr)
-        pushToMoves(moves, x, y + factor);
+    if (matrix[(y) * 8 + (x+factor)] == nullptr)
+        pushToMoves(moves, x+factor, y);
 
-    if (matrix[(y + factor) * 8 + x + 1] != nullptr)
+    if (matrix[(y+factor) * 8 + x + 1] != nullptr)
         pushToMoves(moves, x + 1, y + factor, true);
-    if (matrix[(y + factor) * 8 + x - 1] != nullptr)
-        pushToMoves(moves, x - 1, y + factor, true);
-
+    if (matrix[(y+factor) * 8 + x - 1] != nullptr)
+        pushToMoves(moves, x - 1 , y + factor, true);
 
     return moves;
 }

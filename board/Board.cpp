@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Board.h"
 #include "../Helper.h"
+#include "../piece/queen/Queen.h"
+
 
 /**
  * Function to create a board, with a new piece, the new move and a boolean to check if the previous state was check
@@ -16,14 +18,19 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     //Add the white pieces to the new board
     for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
 
+        //The new piece
         if ((*it) == piece) {
-            Piece *new_piece = (*it)->newPiece();
-            new_piece->setX(move->getX());
-            new_piece->setY(move->getY());
-            board->pushPiece(new_piece);
+            if (piece->getType() == 5 && move->getX() == 7){
+                board->pushPiece(new Queen(7,move->getY(),WHITE));
+            }
+            else {
+                Piece *new_piece = (*it)->newPiece();
+                new_piece->setX(move->getX());
+                new_piece->setY(move->getY());
+                board->pushPiece(new_piece);
+            }
         }
         else {
-
             if (turn == BLACK) {
                 if (!(move->getX() == (*it)->getX() && move->getY() == (*it)->getY())) {
                     board->pushPiece((*it)->newPiece());
@@ -32,9 +39,7 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
             else {
                 board->pushPiece((*it)->newPiece());
             }
-
         }
-
     }
 
     //Add the white pieces to the new board
@@ -42,10 +47,15 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
 
         //The new piece
         if ((*it) == piece) {
-            Piece *new_piece = (*it)->newPiece();
-            new_piece->setX(move->getX());
-            new_piece->setY(move->getY());
-            board->pushPiece(new_piece);
+            if (piece->getType() == 5 && move->getX() == 0){
+                board->pushPiece(new Queen(0,move->getY(),BLACK));
+            }
+            else {
+                Piece *new_piece = (*it)->newPiece();
+                new_piece->setX(move->getX());
+                new_piece->setY(move->getY());
+                board->pushPiece(new_piece);
+            }
         }
         else {
             if (turn == WHITE) {
@@ -59,6 +69,7 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
         }
     }
 
+    board->matrix = nullptr;
     board->matrix = board->getMatrix();
 
     //If the board was in check, the new state cant be check
@@ -96,18 +107,30 @@ bool Board::finalReached() {
         winner = 2;
         return true;
     }
-    if (isInCheckmate()) {
 
-        if (isInCheckmateWithPieces(getWhiteKing(), blackPieces))
-            winner = BLACK;
-        else
-            winner = WHITE;
-        printf("Check mate, %d is the winner\n",winner);
+
+    whiteKing = nullptr;
+    whiteKing = getWhiteKing();
+    if (isInCheckmateWithPieces(whiteKing, blackPieces)) {
+        winner = BLACK;
+        printf("Check mate, BLACK pieces are the winner\n");
         matrix = nullptr;
         matrix= getMatrix();
         std::cout << *(this);
         return true;
     }
+
+    blackKing = nullptr;
+    blackKing = getBlackKing();
+    if (isInCheckmateWithPieces(blackKing, whitePieces)) {
+        winner = WHITE;
+        printf("Check mate, WHITE pieces are the winner\n");
+        matrix = nullptr;
+        matrix= getMatrix();
+        std::cout << *(this);
+        return true;
+    }
+
     if (turnsLeft == 0) {
         winner = 2;
         return true;
@@ -238,7 +261,7 @@ void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves) {
     for (std::vector<Move *>::iterator it = moves->begin(); it != moves->end(); ++it) {
         Move *move = *it;
 
-        invalidateMatrix();
+        matrix = nullptr;
         matrix = getMatrix();
 
         std::vector<Piece *> pieces;
@@ -250,7 +273,7 @@ void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves) {
 
         for (std::vector<Piece *>::iterator piecesIt = pieces.begin(); piecesIt != pieces.end(); ++piecesIt) {
             if (!((*piecesIt) == piece)) {
-                if ((*piecesIt)->getX() == piece->getX() && (*piecesIt)->getY() == piece->getY()) {
+                if ((*piecesIt)->getX() == move->getX() && (*piecesIt)->getY() == move->getY()) {
                     moves->erase(it);
                     --it;
                 }
@@ -268,7 +291,7 @@ bool Board::isInCheck() {
     blackKing = getBlackKing();
     inCheck = inCheck || isInCheckWithPieces(blackKing, whitePieces);
     whiteKing = nullptr;
-    whiteKing = getBlackKing();
+    whiteKing = getWhiteKing();
     inCheck = inCheck || isInCheckWithPieces(whiteKing, blackPieces);
     return inCheck;
 }
@@ -281,10 +304,10 @@ bool Board::isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces) {
     for (std::vector<Piece *>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
 
         matrix = nullptr;
-        //invalidateMatrix();
         matrix = getMatrix();
         std::vector<Move *> *moves = (*it)->makeMove(matrix);
         removeInvalidMoves(*it, moves);
+
         for (std::vector<Move *>::iterator move = moves->begin(); move != moves->end(); ++move) {
             if (king->getX() == (*move)->getX() && king->getY() == (*move)->getY()) {
                 return true;
@@ -305,11 +328,11 @@ bool Board::isInCheckmate() {
 
     blackKing = nullptr;
     blackKing = getBlackKing();
-    inCheck = isInCheckmateWithPieces(getBlackKing(), whitePieces);
+    inCheck = isInCheckmateWithPieces(blackKing, whitePieces);
 
     whiteKing = nullptr;
     whiteKing = getWhiteKing();
-    inCheck = inCheck || isInCheckmateWithPieces(getWhiteKing(), blackPieces);
+    inCheck = inCheck || isInCheckmateWithPieces(whiteKing, blackPieces);
     return inCheck;
 }
 

@@ -10,57 +10,56 @@ std::vector<Move *> *Queen::makeMove(Piece **matrix) {
 
     /** Horizontal right **/
     for (int i = 1; i < 8; ++i) {
-        pushToMoves(moves, i + x, y);
-        if (matrix[y * 8 + (i + x)] != nullptr) {
+
+        if (pushToMoves(moves, i + x, y) && matrix[y * 8 + (i + x)] != nullptr) {
             break;
         }
     }
 
     /** Horizontal left **/
     for (int i = -1; i > -8; --i) {
-        pushToMoves(moves, i + x, y);
-        if (matrix[y * 8 + (i + x)] != nullptr) {
+        if (  pushToMoves(moves, i + x, y) && matrix[y * 8 + (i + x)] != nullptr) {
             break;
         }
     }
 
     /** Vertical down **/
     for (int i = 1; i < 8; ++i) {
-        pushToMoves(moves, x, y + i);
-        if (matrix[(y + i) * 8 + x] != nullptr) {
+
+        if (pushToMoves(moves, x, y + i) && matrix[(y + i) * 8 + x] != nullptr) {
             break;
         }
     }
 
     /** Vertical up **/
     for (int i = -1; i > -8; --i) {
-        pushToMoves(moves, x, y + i);
-        if (matrix[(y + i) * 8 + x] != nullptr) {
+
+        if (pushToMoves(moves, x, y + i) && matrix[(y + i) * 8 + x] != nullptr) {
             break;
         }
     }
 
     for (int i = 1; i < 7; ++i) {
-        pushToMoves(moves, x - i, y - i);
-        if (matrix[(y - i) * 8 + (x - i)] != nullptr)
+
+        if (pushToMoves(moves, x - i, y - i) && matrix[(y - i) * 8 + (x - i)] != nullptr)
             break;
     }
 
     for (int i = 1; i < 7; ++i) {
-        pushToMoves(moves, x + i, y + i);
-        if (matrix[(y + i) * 8 + (x + i)] != nullptr)
+
+        if ( pushToMoves(moves, x + i, y + i) && matrix[(y + i) * 8 + (x + i)] != nullptr)
             break;
     }
 
     for (int i = 1; i < 7; ++i) {
-        pushToMoves(moves, x - i, y + i);
-        if (matrix[(y + i) * 8 + (x - i)] != nullptr)
+
+        if (pushToMoves(moves, x - i, y + i) && matrix[(y + i) * 8 + (x - i)] != nullptr)
             break;
     }
 
     for (int i = 1; i < 7; ++i) {
-        pushToMoves(moves, x + i, y - i);
-        if (matrix[(y - i) * 8 + (x + i)] != nullptr)
+
+        if (pushToMoves(moves, x + i, y - i) && matrix[(y - i) * 8 + (x + i)] != nullptr)
             break;
     }
 

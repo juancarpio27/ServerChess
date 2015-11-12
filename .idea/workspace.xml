@@ -14,18 +14,10 @@
     <list default="true" id="5f6bf884-420a-453f-8587-27ba22f8b858" name="Default" comment="k">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/board/Board.cpp" afterPath="$PROJECT_DIR$/board/Board.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/board/Board.h" afterPath="$PROJECT_DIR$/board/Board.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/game/Game.cpp" afterPath="$PROJECT_DIR$/game/Game.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.cpp" afterPath="$PROJECT_DIR$/main.cpp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/bishop/Bishop.cpp" afterPath="$PROJECT_DIR$/piece/bishop/Bishop.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/bishop/Bishop.h" afterPath="$PROJECT_DIR$/piece/bishop/Bishop.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/knight/Knight.cpp" afterPath="$PROJECT_DIR$/piece/knight/Knight.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/knight/Knight.h" afterPath="$PROJECT_DIR$/piece/knight/Knight.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/pawn/Pawn.cpp" afterPath="$PROJECT_DIR$/piece/pawn/Pawn.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/pawn/Pawn.h" afterPath="$PROJECT_DIR$/piece/pawn/Pawn.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/queen/Queen.cpp" afterPath="$PROJECT_DIR$/piece/queen/Queen.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/queen/Queen.h" afterPath="$PROJECT_DIR$/piece/queen/Queen.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/piece/rook/Rook.cpp" afterPath="$PROJECT_DIR$/piece/rook/Rook.cpp" />
     </list>
     <ignored path="chess_solver.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,11 +38,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Board.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Board.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/board/Board.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0397878">
-              <caret line="94" column="42" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
               <folding>
                 <element signature="e#39#58#0" expanded="true" />
               </folding>
@@ -58,54 +50,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Board.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/board/Board.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Game.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Game.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/game/Game.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="50" column="27" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
+            <state vertical-scroll-proportion="2.69437">
+              <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
               <folding>
                 <element signature="e#39#58#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Move.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/piece/Move.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.3333333">
-              <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="439" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Rook.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/piece/rook/Rook.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -115,6 +67,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Move.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/piece/Move.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -143,19 +105,19 @@
         <option value="$PROJECT_DIR$/piece/rook/Rook.h" />
         <option value="$PROJECT_DIR$/piece/king/King.cpp" />
         <option value="$PROJECT_DIR$/piece/bishop/Bishop.h" />
-        <option value="$PROJECT_DIR$/piece/bishop/Bishop.cpp" />
         <option value="$PROJECT_DIR$/piece/knight/Knight.h" />
         <option value="$PROJECT_DIR$/piece/knight/Knight.cpp" />
         <option value="$PROJECT_DIR$/piece/pawn/Pawn.h" />
-        <option value="$PROJECT_DIR$/piece/pawn/Pawn.cpp" />
-        <option value="$PROJECT_DIR$/piece/queen/Queen.cpp" />
         <option value="$PROJECT_DIR$/piece/queen/Queen.h" />
         <option value="$PROJECT_DIR$/main.cpp" />
         <option value="$PROJECT_DIR$/piece/rook/Rook.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/board/Board.h" />
-        <option value="$PROJECT_DIR$/game/Game.cpp" />
+        <option value="$PROJECT_DIR$/piece/bishop/Bishop.cpp" />
+        <option value="$PROJECT_DIR$/piece/queen/Queen.cpp" />
+        <option value="$PROJECT_DIR$/piece/pawn/Pawn.cpp" />
         <option value="$PROJECT_DIR$/board/Board.cpp" />
+        <option value="$PROJECT_DIR$/game/Game.cpp" />
       </list>
     </option>
   </component>
@@ -209,6 +171,52 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="AjedrezProgramacionAvanzada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AjedrezProgramacionAvanzada" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AjedrezProgramacionAvanzada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piece" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AjedrezProgramacionAvanzada" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AjedrezProgramacionAvanzada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="piece" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pawn" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AjedrezProgramacionAvanzada" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="AjedrezProgramacionAvanzada" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="board" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -284,17 +292,26 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="720" extended-state="6" />
-    <editor active="false" />
+    <frame x="0" y="23" width="1280" height="720" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25178713" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28503186" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961783" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2834395" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32924962" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3121019" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36146498" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2203125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.57802546" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -341,18 +358,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="92" />
+      <option name="time" value="122" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/piece/rook/Rook.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/piece/Piece.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -553,35 +563,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/piece/Color.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35928145">
-          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Helper.h">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49401197">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piece/queen/Queen.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5958084">
-          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piece/bishop/Bishop.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7185629">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -597,7 +582,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -605,7 +589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -637,15 +620,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piece/bishop/Bishop.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="40" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -653,23 +627,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="24" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piece/pawn/Pawn.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/piece/queen/Queen.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -677,14 +634,75 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="33" selection-start-line="11" selection-start-column="33" selection-end-line="11" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.3333333">
+        <state vertical-scroll-proportion="0.0">
           <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="439" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piece/queen/Queen.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="11" selection-start-line="18" selection-start-column="11" selection-end-line="18" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piece/queen/Queen.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piece/Color.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2970297">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/board/Board.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.519802">
+          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piece/bishop/Bishop.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/memory">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1672" column="0" selection-start-line="1672" selection-start-column="0" selection-end-line="1672" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piece/bishop/Bishop.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5173267">
+          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/piece/pawn/Pawn.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.66831684">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -705,28 +723,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/game/Game.cpp">
+    <entry file="file://$PROJECT_DIR$/board/Board.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="27" selection-start-line="50" selection-start-column="27" selection-end-line="50" selection-end-column="27" />
+          <caret line="76" column="0" selection-start-line="76" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
           <folding>
             <element signature="e#39#58#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/board/Board.h">
+    <entry file="file://$PROJECT_DIR$/game/Game.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="1" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/board/Board.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0397878">
-          <caret line="94" column="42" selection-start-line="94" selection-start-column="42" selection-end-line="94" selection-end-column="42" />
+        <state vertical-scroll-proportion="2.69437">
+          <caret line="67" column="32" selection-start-line="67" selection-start-column="32" selection-end-line="67" selection-end-column="32" />
           <folding>
             <element signature="e#39#58#0" expanded="true" />
           </folding>
