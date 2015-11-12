@@ -66,3 +66,7 @@ std::vector<Move *> *Queen::makeMove(Piece **matrix) {
 
     return moves;
 }
+
+Piece* Queen::newPiece() {
+    return new Queen(x,y,color);
+}

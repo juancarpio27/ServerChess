@@ -14,6 +14,8 @@ public:
     Knight(int _x, int _y, Color _color) : Piece(_x, _y, _color, KNIGHT) { }
 
     std::vector<Move *> *makeMove(Piece **matrix);
+
+    Piece* newPiece();
 };
 
 

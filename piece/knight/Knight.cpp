@@ -19,3 +19,7 @@ std::vector<Move *> *Knight::makeMove(Piece **matrix) {
 
     return moves;
 }
+
+Piece* Knight::newPiece() {
+    return new Knight(x,y,color);
+}

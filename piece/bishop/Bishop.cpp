@@ -35,3 +35,7 @@ std::vector<Move *> *Bishop::makeMove(Piece **matrix) {
     }
     return moves;
 }
+
+Piece* Bishop::newPiece() {
+    return new Bishop(x,y,color);
+}

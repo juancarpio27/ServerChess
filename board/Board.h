@@ -15,7 +15,6 @@ private:
     std::vector<Piece *> blackPieces;
     Piece **matrix;
     Color turn;
-    Move *moves;
     Piece *whiteKing;
     Piece *blackKing;
     int turnsLeft;
@@ -51,6 +50,8 @@ public:
     Board(Color _turn, int _turnsLeft) : turn(_turn), turnsLeft(_turnsLeft) { }
 
     Board(Piece *piece, std::vector<Move *> *moves);
+
+    ~Board();
 
     void execute();
 

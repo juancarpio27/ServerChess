@@ -20,3 +20,7 @@ std::vector<Move *> *Pawn::makeMove(Piece **matrix) {
 
     return moves;
 }
+
+Piece* Pawn::newPiece() {
+    return new Pawn(x,y,color);
+}
