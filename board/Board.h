@@ -19,6 +19,9 @@ private:
     Piece *blackKing;
     int turnsLeft;
     int winner;
+    Board *father = nullptr;
+    int decision; //WHITE MIN BLACK MAX
+    Board *bestBoard;
 
     void removeInvalidMoves(Piece *piece, std::vector<Move *> *moves);
 
@@ -46,8 +49,17 @@ private:
 
     bool finalReached();
 
+    int calculateHeuristic(Color color);
+
+    void updateFather();
+
 public:
-    Board(Color _turn, int _turnsLeft) : turn(_turn), turnsLeft(_turnsLeft) { }
+    Board(Color _turn, int _turnsLeft) : turn(_turn), turnsLeft(_turnsLeft) {
+        if (_turn == WHITE)
+            decision = 1000;
+        else
+            decision = -1000;
+    }
 
     Board(Piece *piece, std::vector<Move *> *moves);
 
@@ -62,6 +74,10 @@ public:
     void clean();
 
     friend std::ostream &operator<<(std::ostream &out, Board &board);
+
+    void getBestPath();
+
+    Board* getBestBoard();
 };
 
 

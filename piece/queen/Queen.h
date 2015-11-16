@@ -12,7 +12,7 @@
 
 class Queen : public Piece {
 public:
-    Queen(int _x, int _y, Color _color) : Piece(_x, _y, _color, QUEEN) { }
+    Queen(int _x, int _y, Color _color) : Piece(_x, _y, _color, QUEEN) {  weight = 9; }
 
     std::vector<Move *> *makeMove(Piece **matrix);
 

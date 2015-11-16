@@ -15,6 +15,8 @@ protected:
     int x;
     int y;
     Color color;
+    int weight;
+
 public:
     Piece() { }
 
@@ -45,6 +47,10 @@ public:
     int getY();
 
     void setY(int value);
+
+    int getWeight();
+
+    void setWeight(int value);
 
     virtual bool isKing();
 

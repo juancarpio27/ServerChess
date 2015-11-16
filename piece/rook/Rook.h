@@ -12,7 +12,7 @@
 
 class Rook : public Piece {
 public:
-    Rook(int _x, int _y, Color _color) : Piece(_x, _y, _color, ROOK) { }
+    Rook(int _x, int _y, Color _color) : Piece(_x, _y, _color, ROOK) { weight = 5; }
 
     Piece* newPiece();
 

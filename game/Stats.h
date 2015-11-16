@@ -15,9 +15,7 @@ class Stats {
 
     private:
         static bool instanceFlag;
-        long int whiteWins = 0;
-        long int blackWins = 0;
-        long int draw = 0;
+
 
         static Stats *single;
         Stats()
@@ -25,6 +23,11 @@ class Stats {
             //private constructor
         }
     public:
+
+    long int whiteWins = 0;
+    long int blackWins = 0;
+    long int draw = 0;
+
     static const int WHITE_WINS = 0;
         static Stats* getInstance();
         void gameFinished(std::vector<Piece *> * pieces);
@@ -32,6 +35,8 @@ class Stats {
         {
             instanceFlag = false;
         }
+
+    void printStats();
 
 
 };

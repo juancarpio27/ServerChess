@@ -11,7 +11,7 @@
 
 class King : public Piece {
 public:
-    King(int _x, int _y, Color _color) : Piece(_x, _y, _color, KING) { }
+    King(int _x, int _y, Color _color) : Piece(_x, _y, _color, KING) { weight = 0; }
 
     King(Piece *old_piece, Move* move) : Piece(old_piece, move) { }
 

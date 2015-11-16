@@ -11,7 +11,7 @@
 
 class Pawn : public Piece {
 public:
-    Pawn(int _x, int _y, Color _color) : Piece(_x, _y, _color, PAWN) { }
+    Pawn(int _x, int _y, Color _color) : Piece(_x, _y, _color, PAWN) {  weight = 1; }
 
     Piece* newPiece();
 

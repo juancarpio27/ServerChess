@@ -4,7 +4,7 @@
 
 #include "Stats.h"
 
- bool Stats::instanceFlag = false;
+bool Stats::instanceFlag = false;
 Stats* Stats::single = nullptr;
 Stats* Stats::getInstance()
 {
@@ -20,7 +20,13 @@ Stats* Stats::getInstance()
     }
 }
 
-/*void Stats::method()
-{
-    //cout << "Method of the singleton class" << endl;
-}*/
+void Stats::printStats(){
+
+    long int total = draw + whiteWins + blackWins;
+
+    printf("Draws %f\n",(draw/(float)total)*100);
+    printf("Whites %f\n",(whiteWins/(float)total)*100);
+    printf("Blacks %f\n",(blackWins/(float)total)*100);
+
+
+}

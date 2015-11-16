@@ -75,3 +75,12 @@ std::vector<Move *> *Piece::makeMove(Piece **matrix) {
 Piece* Piece::newPiece() {
 
 }
+
+int Piece::getWeight(){
+    return weight;
+}
+
+void Piece::setWeight(int value){
+    weight = value;
+
+}

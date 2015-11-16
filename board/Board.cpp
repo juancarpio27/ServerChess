@@ -6,6 +6,7 @@
 #include "Board.h"
 #include "../Helper.h"
 #include "../piece/queen/Queen.h"
+#include "../game/Stats.h"
 
 
 /**
@@ -69,8 +70,8 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
         }
     }
 
-    board->matrix = nullptr;
     board->matrix = board->getMatrix();
+    board->father = this;
 
     //If the board was in check, the new state cant be check
     if (incheck) {
@@ -99,12 +100,45 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     return board;
 }
 
+int Board::calculateHeuristic(Color color){
+
+    std::vector<Piece *> pieces, otherPieces;
+
+    if (color == WHITE) {
+        pieces = whitePieces;
+        otherPieces = blackPieces;
+    }
+
+    else {
+        pieces = blackPieces;
+        otherPieces = whitePieces;
+    }
+
+
+    int total = 0;
+
+    for (std::vector<Piece *>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
+        total += (*it)->getWeight();
+    }
+
+    for (std::vector<Piece *>::iterator it = otherPieces.begin(); it != otherPieces.end(); ++it) {
+        total -= (*it)->getWeight();
+    }
+
+    //TODO pawns and king safety and movements
+
+    return total;
+}
+
 /**
  * Function to check if a final stage has been reached
  */
 bool Board::finalReached() {
     if (!isInCheck() && isInCheckmate()) {
+        Stats *s = s->getInstance();
+        s->draw++;
         winner = 2;
+        decision = calculateHeuristic(turn);
         return true;
     }
 
@@ -113,10 +147,9 @@ bool Board::finalReached() {
     whiteKing = getWhiteKing();
     if (isInCheckmateWithPieces(whiteKing, blackPieces)) {
         winner = BLACK;
-        printf("Check mate, BLACK pieces are the winner\n");
-        matrix = nullptr;
-        matrix= getMatrix();
-        std::cout << *(this);
+        decision = calculateHeuristic(BLACK)*2;
+        Stats *s = s->getInstance();
+        s->blackWins++;
         return true;
     }
 
@@ -124,15 +157,17 @@ bool Board::finalReached() {
     blackKing = getBlackKing();
     if (isInCheckmateWithPieces(blackKing, whitePieces)) {
         winner = WHITE;
-        printf("Check mate, WHITE pieces are the winner\n");
-        matrix = nullptr;
-        matrix= getMatrix();
-        std::cout << *(this);
+        decision = calculateHeuristic(WHITE)/2;
+        Stats *s = s->getInstance();
+        s->whiteWins++;
         return true;
     }
 
     if (turnsLeft == 0) {
         winner = 2;
+        decision = calculateHeuristic(turn);
+        Stats *s = s->getInstance();
+        s->draw++;
         return true;
     }
     return false;
@@ -142,8 +177,6 @@ bool Board::finalReached() {
  * A function to execute all the posible movements for a piece, and creating all the new posible boards
  */
 void Board::execute() {
-
-    matrix = getMatrix();
 
     if (finalReached()) {
         return;
@@ -165,6 +198,7 @@ void Board::execute() {
             Board *board = createBoard(*pieceIt, *moveIt, incheck, turnsLeft - 1);
             if (board != nullptr) {
                 board->execute();
+                board->updateFather();
             }
         }
         delete moves;
@@ -182,8 +216,27 @@ void Board::pushPiece(Piece *piece) {
     }
 }
 
+void Board::updateFather(){
+    if (father->turn == WHITE){
+        if (decision < father->decision){
+            father->decision = decision;
+            father->bestBoard = this;
+        }
+    }
+    else {
+        if (decision > father->decision){
+            father->decision = decision;
+            father->bestBoard = this;
+        }
+    }
+}
+
 void Board::clean() {
 
+}
+
+void Board::getBestPath(){
+    printf("Best path\n");
 }
 
 /**
@@ -261,7 +314,9 @@ void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves) {
     for (std::vector<Move *>::iterator it = moves->begin(); it != moves->end(); ++it) {
         Move *move = *it;
 
-        matrix = nullptr;
+
+        //matrix = nullptr;
+        invalidateMatrix();
         matrix = getMatrix();
 
         std::vector<Piece *> pieces;
@@ -368,9 +423,15 @@ bool Board::isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces) {
         *(matrix + y * 8 + x) = king;
 
         if (!inCheck) {
+            delete moves;
+            matrix = nullptr;
+            matrix = getMatrix();
             return false;
         }
     }
+    delete moves;
+    matrix = nullptr;
+    matrix = getMatrix();
     return true;
 }
 
@@ -379,7 +440,8 @@ bool Board::isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces) {
  */
 std::ostream &operator<<(std::ostream &out, Board &board) {
     board.matrix = nullptr;
-    Piece **matrix = board.getMatrix();
+    board.matrix = board.getMatrix();
+    Piece **matrix = board.matrix;
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             int num = *(matrix + j * 8 + i) == nullptr ? 1 : 0;
@@ -420,6 +482,7 @@ std::ostream &operator<<(std::ostream &out, Board &board) {
     return out;
 }
 
+
 std::vector<Piece *> Board::getBlackPieces() {
     return blackPieces;
 }
@@ -438,4 +501,8 @@ Board::~Board() {
     for (std::vector<Piece *>::iterator it = blackPieces.begin(); it != blackPieces.end(); ++it) {
         delete (*it);
     }
+}
+
+Board* Board::getBestBoard(){
+    return bestBoard;
 }
