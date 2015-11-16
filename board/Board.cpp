@@ -77,8 +77,13 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
 
     //If the board was in check, the new state cant be check
     if (incheck) {
-        if (board->isInCheck())
+        if (board->isInCheck()) {
+            if (turn == WHITE)
+                decision = -1000;
+            else
+                decision = 1000;
             board = nullptr;
+        }
     }
 
     else {
@@ -87,6 +92,7 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
             board->whiteKing = nullptr;
             board->whiteKing = board->getWhiteKing();
             if (board->isInCheckWithPieces(board->whiteKing, board->getBlackPieces())) {
+                decision = -1000;
                 board = nullptr;
             }
         }
@@ -94,6 +100,7 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
             board->blackKing = nullptr;
             board->blackKing = board->getBlackKing();
             if (board->isInCheckWithPieces(board->blackKing, board->getWhitePieces())) {
+                decision = 1000;
                 board =  nullptr;
             }
         }
@@ -104,7 +111,7 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
 
 int Board::calculateHeuristic(Color color){
 
-    std::vector<Piece *> pieces, otherPieces;
+    /*std::vector<Piece *> pieces, otherPieces;
 
     if (color == WHITE) {
         pieces = whitePieces;
@@ -114,7 +121,11 @@ int Board::calculateHeuristic(Color color){
     else {
         pieces = blackPieces;
         otherPieces = whitePieces;
-    }
+    }*/
+
+    std::vector<Piece *> pieces, otherPieces;
+    pieces = blackPieces;
+    otherPieces = whitePieces;
 
 
     int total = 0;
@@ -159,7 +170,7 @@ bool Board::finalReached() {
     blackKing = getBlackKing();
     if (isInCheckmateWithPieces(blackKing, whitePieces)) {
         winner = WHITE;
-        decision = calculateHeuristic(WHITE)/2;
+        decision = calculateHeuristic(WHITE)*2;
         Stats *s = s->getInstance();
         s->whiteWins++;
         return true;
@@ -238,7 +249,7 @@ void Board::clean() {
 }
 
 void Board::getBestPath(){
-    printf("Best path\n");
+    printf("Best path has decision %d\n",decision);
 }
 
 /**
