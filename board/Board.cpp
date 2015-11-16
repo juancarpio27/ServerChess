@@ -73,6 +73,8 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     board->matrix = board->getMatrix();
     board->father = this;
 
+
+
     //If the board was in check, the new state cant be check
     if (incheck) {
         if (board->isInCheck())
@@ -344,9 +346,13 @@ bool Board::isInCheck() {
     bool inCheck = false;
     blackKing = nullptr;
     blackKing = getBlackKing();
+    if (blackKing == nullptr)
+        return true;
     inCheck = inCheck || isInCheckWithPieces(blackKing, whitePieces);
     whiteKing = nullptr;
     whiteKing = getWhiteKing();
+    if (whiteKing == nullptr)
+        return true;
     inCheck = inCheck || isInCheckWithPieces(whiteKing, blackPieces);
     return inCheck;
 }
