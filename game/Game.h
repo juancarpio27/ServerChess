@@ -12,8 +12,10 @@ class Game {
 private:
     bool running;
     Board *board;
-public:
+
     Game();
+public:
+    Game(Board *_board);
 
     bool init();
 

@@ -12,8 +12,8 @@
 #include "../piece/knight/Knight.h"
 #include "../piece/queen/Queen.h"
 
-Game::Game() {
-
+Game::Game(Board *_board) {
+    board = _board;
 }
 
 int Game::execute() {
@@ -23,39 +23,32 @@ int Game::execute() {
 
     board->getBestPath();
 
-    Board *road = board;
-    while (road != nullptr){
-        std::cout << *(road) << "\n\n";
-        road = road->getBestBoard();
-    }
-
     Stats *s = s->getInstance();
-    printf("Draws %d\n",s->draw);
-    printf("Whites %d\n",s->whiteWins);
-    printf("Blacks %d\n",s->blackWins);
-
-    s->printStats();
+    printf("Draws %ld\n",s->draw);
+    printf("Whites %ld\n",s->whiteWins);
+    printf("Blacks %ld\n",s->blackWins);
 
     printf("Execution finished\n");
 }
 
 bool Game::init() {
 
-    //two rooks and king vs king
-    /*board = new Board(WHITE, 5);
+    /*    board = new Board(WHITE, 4);
     board->pushPiece(new Rook(7, 3, WHITE));
     board->pushPiece(new Rook(5, 2, WHITE));
     board->pushPiece(new King(5, 5, WHITE));
     board->pushPiece(new King(3, 6, BLACK));*/
 
+    //two rooks and king vs king
+
     //queen and king vs king
-    board = new Board(WHITE, 4); 
+    /*board = new Board(WHITE, 6); 
     board->pushPiece(new King(0, 4, BLACK)); 
     board->pushPiece(new Queen(1, 7, WHITE));
-     board->pushPiece(new King(3, 5, WHITE));
+     board->pushPiece(new King(3, 5, WHITE));*/
 
     //queen and king vs queen and king
-    /*board = new Board(WHITE, 5); 
+    /*board = new Board(WHITE, 6); 
     board->pushPiece(new King(0, 4, BLACK)); 
     board->pushPiece(new Queen(2, 7, BLACK));
     board->pushPiece(new Queen(1, 7, WHITE));

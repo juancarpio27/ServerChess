@@ -22,11 +22,4 @@ Stats* Stats::getInstance()
 
 void Stats::printStats(){
 
-    long int total = draw + whiteWins + blackWins;
-
-    printf("Draws %f\n",(draw/(float)total)*100);
-    printf("Whites %f\n",(whiteWins/(float)total)*100);
-    printf("Blacks %f\n",(blackWins/(float)total)*100);
-
-
 }

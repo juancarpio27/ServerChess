@@ -15,7 +15,7 @@ public:
 
     King(Piece *old_piece, Move* move) : Piece(old_piece, move) { }
 
-    King(Piece *old_piece) : Piece(old_piece) { printf("Construyendo al rey"); }
+    King(Piece *old_piece) : Piece(old_piece) { }
 
     std::vector<Move *> *makeMove(Piece **matrix);
 

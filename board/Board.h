@@ -8,6 +8,10 @@
 #include <iostream>
 #include "../piece/Piece.h"
 #include "../piece/Move.h"
+#include "../Helper.h"
+#include "../piece/queen/Queen.h"
+#include "../game/Stats.h"
+#include <omp.h>
 
 class Board {
 private:
