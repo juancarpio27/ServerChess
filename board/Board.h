@@ -12,6 +12,7 @@
 #include "../piece/queen/Queen.h"
 #include "../game/Stats.h"
 #include <omp.h>
+#include <jansson.h>
 
 class Board {
 private:
@@ -82,6 +83,8 @@ public:
     void getBestPath();
 
     Board* getBestBoard();
+
+    json_t* board_to_json();
 };
 
 

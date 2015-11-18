@@ -8,6 +8,7 @@
 
 #include <vector>
 #include "../piece/Piece.h"
+#include <jansson.h>
 
 class Stats {
 
@@ -27,6 +28,7 @@ class Stats {
     long int whiteWins = 0;
     long int blackWins = 0;
     long int draw = 0;
+    json_t *boards_json;
 
     static const int WHITE_WINS = 0;
         static Stats* getInstance();

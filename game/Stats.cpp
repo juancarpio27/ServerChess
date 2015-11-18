@@ -11,6 +11,9 @@ Stats* Stats::getInstance()
     if(! instanceFlag)
     {
         single = new Stats();
+        single->boards_json = json_object();
+        json_t *array_json = json_array();
+        json_object_set(single->boards_json, "boards", array_json);
         instanceFlag = true;
         return single;
     }
