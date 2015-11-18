@@ -12,6 +12,8 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     Color turnColor = turn == WHITE ? BLACK : WHITE;
     Board *board = new Board(turnColor, turns);
 
+    board->father = this;
+
     //Add the white pieces to the new board
     for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
 
@@ -67,9 +69,6 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     }
 
     board->matrix = board->getMatrix();
-    board->father = this;
-
-
 
     //If the board was in check, the new state cant be check
     if (incheck) {
@@ -101,17 +100,6 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
 
 int Board::calculateHeuristic(Color color) {
 
-    /*std::vector<Piece *> pieces, otherPieces;
-
-    if (color == WHITE) {
-        pieces = whitePieces;
-        otherPieces = blackPieces;
-    }
-
-    else {
-        pieces = blackPieces;
-        otherPieces = whitePieces;
-    }*/
 
     std::vector<Piece *> pieces, otherPieces;
     pieces = blackPieces;
@@ -150,6 +138,7 @@ bool Board::finalReached() {
         {
             json_t *array_json = json_object_get(s->boards_json,"boards");
             json_array_append(array_json,json_board);
+            //array_json = add_old_boards(array_json);
         }
 
         return true;
@@ -171,6 +160,7 @@ bool Board::finalReached() {
         {
             json_t *array_json = json_object_get(s->boards_json,"boards");
             json_array_append(array_json,json_board);
+            //array_json = add_old_boards(array_json);
         }
         return true;
     }
@@ -190,6 +180,7 @@ bool Board::finalReached() {
         {
             json_t *array_json = json_object_get(s->boards_json,"boards");
             json_array_append(array_json,json_board);
+            //array_json = add_old_boards(array_json);
         }
 
         return true;
@@ -204,10 +195,12 @@ bool Board::finalReached() {
         bestBoard = nullptr;
 
         json_t *json_board = board_to_json();
+        json_board = add_old_boards(json_board);
 #pragma omp critical
         {
             json_t *array_json = json_object_get(s->boards_json,"boards");
             json_array_append(array_json,json_board);
+
         }
         return true;
     }
@@ -572,8 +565,10 @@ json_t *Board::board_to_json() {
 
     json_object_set(board_json, "turn", color);
 
-    json_t *array_json = json_array();
+    json_t *heuristic = json_integer(decision);
+    json_object_set(board_json,"heuristic",heuristic);
 
+    json_t *array_json = json_array();
     json_t *piece;
 
     for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
@@ -673,4 +668,24 @@ json_t *Board::board_to_json() {
     json_object_set(board_json, "pieces", array_json);
 
     return board_json;
+}
+
+json_t *Board::add_old_boards(json_t *board_json){
+
+    json_t *new_json = board_json;
+
+    Board *father_board = father;
+
+    json_t *array_json = json_array();
+    int i = 0;
+
+    while (father_board != nullptr) {
+        json_t *board_father = father_board->board_to_json();
+        json_array_append(array_json,board_father);
+        father_board = father_board->father;
+    }
+
+    json_object_set(new_json,"old_boards",array_json);
+
+    return new_json;
 }

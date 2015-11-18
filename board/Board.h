@@ -85,6 +85,8 @@ public:
     Board* getBestBoard();
 
     json_t* board_to_json();
+
+    json_t *add_old_boards(json_t *board_json);
 };
 
 
