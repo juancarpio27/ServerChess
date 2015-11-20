@@ -60,6 +60,9 @@ private:
 
 public:
     Board(Color _turn, int _turnsLeft) : turn(_turn), turnsLeft(_turnsLeft) {
+
+        matrix = nullptr;
+
         if (_turn == WHITE)
             decision = 1000;
         else

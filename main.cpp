@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
     else
         turn_color = WHITE;
 
-    board = new Board(turn_color,2);
+    board = new Board(turn_color,4);
 
     free(turn);
 

@@ -5,14 +5,15 @@
 #include <iostream>
 #include "Board.h"
 
+int local_draws = 0;
+
 /**
  * Function to create a board, with a new piece, the new move and a boolean to check if the previous state was check
  */
 Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     Color turnColor = turn == WHITE ? BLACK : WHITE;
     Board *board = new Board(turnColor, turns);
-
-    board->father = this;
+    board->bestBoard = nullptr;
 
     //Add the white pieces to the new board
     for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
@@ -69,11 +70,15 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     }
 
     board->matrix = board->getMatrix();
+    board->father = this;
+
+
 
     //If the board was in check, the new state cant be check
     if (incheck) {
         if (board->isInCheck()) {
-            board = nullptr;
+            delete board;
+            return nullptr;
         }
     }
 
@@ -83,14 +88,16 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
             board->whiteKing = nullptr;
             board->whiteKing = board->getWhiteKing();
             if (board->isInCheckWithPieces(board->whiteKing, board->getBlackPieces())) {
-                board = nullptr;
+                delete board;
+                return nullptr;
             }
         }
         else {
             board->blackKing = nullptr;
             board->blackKing = board->getBlackKing();
             if (board->isInCheckWithPieces(board->blackKing, board->getWhitePieces())) {
-                board = nullptr;
+                delete board;
+                return nullptr;
             }
         }
     }
@@ -99,7 +106,6 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
 }
 
 int Board::calculateHeuristic(Color color) {
-
 
     std::vector<Piece *> pieces, otherPieces;
     pieces = blackPieces;
@@ -116,8 +122,6 @@ int Board::calculateHeuristic(Color color) {
         total -= (*it)->getWeight();
     }
 
-    //TODO pawns and king safety and movements
-
     return total;
 }
 
@@ -132,15 +136,6 @@ bool Board::finalReached() {
         winner = 2;
         decision = calculateHeuristic(turn);
         bestBoard = nullptr;
-
-        json_t *json_board = board_to_json();
-#pragma omp critical
-        {
-            json_t *array_json = json_object_get(s->boards_json,"boards");
-            json_array_append(array_json,json_board);
-            //array_json = add_old_boards(array_json);
-        }
-
         return true;
     }
 
@@ -154,14 +149,6 @@ bool Board::finalReached() {
 #pragma omp atomic
         s->blackWins++;
         bestBoard = nullptr;
-
-        json_t *json_board = board_to_json();
-#pragma omp critical
-        {
-            json_t *array_json = json_object_get(s->boards_json,"boards");
-            json_array_append(array_json,json_board);
-            //array_json = add_old_boards(array_json);
-        }
         return true;
     }
 
@@ -174,15 +161,6 @@ bool Board::finalReached() {
 #pragma omp atomic
         s->whiteWins++;
         bestBoard = nullptr;
-
-        json_t *json_board = board_to_json();
-#pragma omp critical
-        {
-            json_t *array_json = json_object_get(s->boards_json,"boards");
-            json_array_append(array_json,json_board);
-            //array_json = add_old_boards(array_json);
-        }
-
         return true;
     }
 
@@ -193,15 +171,6 @@ bool Board::finalReached() {
 #pragma omp atomic
         s->draw++;
         bestBoard = nullptr;
-
-        json_t *json_board = board_to_json();
-        json_board = add_old_boards(json_board);
-#pragma omp critical
-        {
-            json_t *array_json = json_object_get(s->boards_json,"boards");
-            json_array_append(array_json,json_board);
-
-        }
         return true;
     }
     return false;
@@ -225,23 +194,29 @@ void Board::execute() {
         pieces = blackPieces;
     }
 
-
     for (std::vector<Piece *>::iterator pieceIt = pieces.begin(); pieceIt != pieces.end(); ++pieceIt) {
         std::vector<Move *> *moves = (*pieceIt)->makeMove(matrix);
         removeInvalidMoves(*pieceIt, moves);
-        for (std::vector<Move *>::iterator moveIt = moves->begin(); moveIt != moves->end(); ++moveIt) {
-            Board *board = createBoard(*pieceIt, *moveIt, incheck, turnsLeft - 1);
-            if (board != nullptr) {
-#pragma omp task
-                {
+
+        std::vector<Board *> child_boards;
+#pragma omp task untied
+        {
+            for (std::vector<Move *>::iterator moveIt = moves->begin(); moveIt != moves->end(); ++moveIt) {
+                Board *board = createBoard(*pieceIt, *moveIt, incheck, turnsLeft - 1);
+                if (board != nullptr) {
                     board->execute();
                     board->updateFather();
+                    child_boards.push_back(board);
                 }
+                delete (*moveIt);
+            }
 
+            for (std::vector<Board *>::iterator child = child_boards.begin(); child != child_boards.end(); ++child) {
+                if ((*child) != bestBoard)
+                    delete (*child);
             }
 
         }
-
         delete moves;
     }
 #pragma omp taskwait
@@ -286,7 +261,6 @@ void Board::getBestPath() {
  * Get the board matrix representation
  */
 Piece **Board::getMatrix() {
-
     if (matrix == nullptr) {
         matrix = new Piece *[64];
         for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
@@ -374,6 +348,7 @@ void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves) {
                 if ((*piecesIt)->getX() == move->getX() && (*piecesIt)->getY() == move->getY()) {
                     moves->erase(it);
                     --it;
+                    delete move;
                 }
             }
         }
@@ -406,6 +381,7 @@ bool Board::isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces) {
     for (std::vector<Piece *>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
 
         matrix = nullptr;
+        //invalidateMatrix();
         matrix = getMatrix();
         std::vector<Move *> *moves = (*it)->makeMove(matrix);
         removeInvalidMoves(*it, moves);
@@ -414,6 +390,7 @@ bool Board::isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces) {
             if (king->getX() == (*move)->getX() && king->getY() == (*move)->getY()) {
                 return true;
             }
+            delete (*move);
         }
         delete moves;
     }
@@ -467,16 +444,14 @@ bool Board::isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces) {
         king->setX(x);
         king->setY(y);
 
+        delete (*move);
+
         if (!inCheck) {
             delete moves;
-            matrix = nullptr;
-            matrix = getMatrix();
             return false;
         }
     }
     delete moves;
-    matrix = nullptr;
-    matrix = getMatrix();
     return true;
 }
 
@@ -537,22 +512,22 @@ std::vector<Piece *>  Board::getWhitePieces() {
 }
 
 Board::~Board() {
-    if (matrix != nullptr)
-        delete matrix;
 
+    //invalidateMatrix();
     for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
         delete (*it);
     }
+
     for (std::vector<Piece *>::iterator it = blackPieces.begin(); it != blackPieces.end(); ++it) {
         delete (*it);
     }
+
 }
 
 Board *Board::getBestBoard() {
     return bestBoard;
 }
 
-//PASS A BOARD TO A JSON OBJECT
 json_t *Board::board_to_json() {
 
     json_t *board_json = json_object();
@@ -668,24 +643,4 @@ json_t *Board::board_to_json() {
     json_object_set(board_json, "pieces", array_json);
 
     return board_json;
-}
-
-json_t *Board::add_old_boards(json_t *board_json){
-
-    json_t *new_json = board_json;
-
-    Board *father_board = father;
-
-    json_t *array_json = json_array();
-    int i = 0;
-
-    while (father_board != nullptr) {
-        json_t *board_father = father_board->board_to_json();
-        json_array_append(array_json,board_father);
-        father_board = father_board->father;
-    }
-
-    json_object_set(new_json,"old_boards",array_json);
-
-    return new_json;
 }
