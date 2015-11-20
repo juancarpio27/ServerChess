@@ -138,6 +138,7 @@ bool Board::finalReached() {
         bestBoard = nullptr;
 
         json_t *json_board = board_to_json();
+        json_board = add_old_boards(json_board);
 #pragma omp critical
         {
             json_t *array_json = json_object_get(s->boards_json,"boards");
@@ -160,11 +161,12 @@ bool Board::finalReached() {
         bestBoard = nullptr;
 
         json_t *json_board = board_to_json();
+        json_board = add_old_boards(json_board);
 #pragma omp critical
         {
             json_t *array_json = json_object_get(s->boards_json,"boards");
             json_array_append(array_json,json_board);
-            //array_json = add_old_boards(array_json);
+
         }
         return true;
     }
@@ -180,11 +182,10 @@ bool Board::finalReached() {
         bestBoard = nullptr;
 
         json_t *json_board = board_to_json();
+        json_board = add_old_boards(json_board);
 #pragma omp critical
         {
             json_t *array_json = json_object_get(s->boards_json,"boards");
-            json_array_append(array_json,json_board);
-            //array_json = add_old_boards(array_json);
         }
 
         return true;
