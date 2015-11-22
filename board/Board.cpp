@@ -367,9 +367,6 @@ void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves) {
     for (std::vector<Move *>::iterator it = moves->begin(); it != moves->end(); ++it) {
         Move *move = *it;
 
-        invalidateMatrix();
-        matrix = getMatrix();
-
         std::vector<Piece *> pieces;
         if (piece->getColor() == WHITE) {
             pieces = whitePieces;
@@ -572,9 +569,9 @@ json_t *Board::board_to_json() {
     json_t *color;
 
     if (turn == WHITE)
-        color = json_string("white");
+        color = json_string("whites");
     else
-        color = json_string("black");
+        color = json_string("blacks");
 
     json_object_set(board_json, "turn", color);
 
@@ -690,7 +687,6 @@ json_t *Board::add_old_boards(json_t *board_json){
     Board *father_board = father;
 
     json_t *array_json = json_array();
-    int i = 0;
 
     while (father_board != nullptr) {
         json_t *board_father = father_board->board_to_json();
