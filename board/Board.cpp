@@ -72,8 +72,6 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
     board->matrix = board->getMatrix();
     board->father = this;
 
-
-
     //If the board was in check, the new state cant be check
     if (incheck) {
         if (board->isInCheck()) {
@@ -216,6 +214,8 @@ bool Board::finalReached() {
  * A function to execute all the posible movements for a piece, and creating all the new posible boards
  */
 void Board::execute() {
+
+    matrix = getMatrix();
 
     if (finalReached()) {
         return;
@@ -367,8 +367,6 @@ void Board::removeOverlappingPieces(Piece *piece, std::vector<Move *> *moves) {
     for (std::vector<Move *>::iterator it = moves->begin(); it != moves->end(); ++it) {
         Move *move = *it;
 
-
-        //matrix = nullptr;
         invalidateMatrix();
         matrix = getMatrix();
 
@@ -414,24 +412,26 @@ bool Board::isInCheck() {
  */
 bool Board::isInCheckWithPieces(Piece *king, std::vector<Piece *> pieces) {
 
+    bool value = false;
+
     for (std::vector<Piece *>::iterator it = pieces.begin(); it != pieces.end(); ++it) {
 
-        matrix = nullptr;
-        //invalidateMatrix();
+        //matrix = nullptr;
+        invalidateMatrix();
         matrix = getMatrix();
         std::vector<Move *> *moves = (*it)->makeMove(matrix);
         removeInvalidMoves(*it, moves);
 
         for (std::vector<Move *>::iterator move = moves->begin(); move != moves->end(); ++move) {
             if (king->getX() == (*move)->getX() && king->getY() == (*move)->getY()) {
-                return true;
+                value =  true;
             }
             delete (*move);
         }
         delete moves;
     }
 
-    return false;
+    return value;
 }
 
 
@@ -457,6 +457,9 @@ bool Board::isInCheckmate() {
 bool Board::isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces) {
     std::vector<Move *> *moves = king->makeMove(matrix);
     removeInvalidMoves(king, moves);
+
+    bool value = true;
+
     for (std::vector<Move *>::iterator move = moves->begin(); move != moves->end(); ++move) {
         int x = king->getX();
         int y = king->getY();
@@ -483,12 +486,11 @@ bool Board::isInCheckmateWithPieces(Piece *king, std::vector<Piece *> pieces) {
         delete (*move);
 
         if (!inCheck) {
-            delete moves;
-            return false;
+            value = false;
         }
     }
     delete moves;
-    return true;
+    return value;
 }
 
 /**
@@ -549,7 +551,7 @@ std::vector<Piece *>  Board::getWhitePieces() {
 
 Board::~Board() {
 
-    //invalidateMatrix();
+    invalidateMatrix();
     for (std::vector<Piece *>::iterator it = whitePieces.begin(); it != whitePieces.end(); ++it) {
         delete (*it);
     }
