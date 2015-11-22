@@ -28,9 +28,8 @@ int main(int argc, char *argv[]) {
 
     opterr = 0;
 
-    while ((c = getopt (argc, argv, "i:o:")) != -1)
-        switch (c)
-        {
+    while ((c = getopt(argc, argv, "i:o:")) != -1)
+        switch (c) {
             case 'i':
                 input_value = optarg;
                 break;
@@ -43,75 +42,75 @@ int main(int argc, char *argv[]) {
 
     ifstream myReadFile;
     myReadFile.open(input_value);
-    char output[1024*1024];
+    char output[1024 * 1024];
     myReadFile >> output;
 
     json_error_t error;
     json_t *json_text = json_loads(output, 0, &error);
 
 
-    json_t *json_turn = json_object_get(json_text,"turn");
+    json_t *json_turn = json_object_get(json_text, "turn");
 
     Board *board;
 
-    char *turn = (char*)malloc(20*sizeof(char));
-    strcpy(turn,json_string_value(json_turn));
+    char *turn = (char *) malloc(20 * sizeof(char));
+    strcpy(turn, json_string_value(json_turn));
     Color turn_color;
 
-    if (!strcmp(turn,"blacks"))
+    if (!strcmp(turn, "blacks"))
         turn_color = BLACK;
     else
         turn_color = WHITE;
 
-    board = new Board(turn_color,2);
+    board = new Board(turn_color, 2);
 
     free(turn);
 
-    json_t *pieces_array = json_object_get(json_text,"pieces");
+    json_t *pieces_array = json_object_get(json_text, "pieces");
 
     int i;
-    for(i = 0; i < json_array_size(pieces_array); i++){
+    for (i = 0; i < json_array_size(pieces_array); i++) {
 
         json_t *data;
         data = json_array_get(pieces_array, i);
 
-        json_t *x,*y,*type,*color;
+        json_t *x, *y, *type, *color;
 
         //REVISO EL TIPO DE FICHA
-        type = json_object_get(data,"kind");
-        char *type_string = (char*)malloc(20*sizeof(char));
-        strcpy(type_string,json_string_value(type));
+        type = json_object_get(data, "kind");
+        char *type_string = (char *) malloc(20 * sizeof(char));
+        strcpy(type_string, json_string_value(type));
         int type_int;
 
-        if (!strcmp("king",type_string))
+        if (!strcmp("king", type_string))
             type_int = 0;
-        if (!strcmp("queen",type_string))
+        if (!strcmp("queen", type_string))
             type_int = 1;
-        if (!strcmp("bishop",type_string))
+        if (!strcmp("bishop", type_string))
             type_int = 2;
-        if (!strcmp("rook",type_string))
+        if (!strcmp("rook", type_string))
             type_int = 3;
-        if (!strcmp("knight",type_string))
+        if (!strcmp("knight", type_string))
             type_int = 4;
-        if (!strcmp("pawn",type_string))
+        if (!strcmp("pawn", type_string))
             type_int = 5;
 
         free(type_string);
 
         //POSICION
-        x = json_object_get(data,"x");
-        y = json_object_get(data,"y");
+        x = json_object_get(data, "x");
+        y = json_object_get(data, "y");
 
         int x_int = json_integer_value(x);
         int y_int = json_integer_value(y);
 
         //COLOR
-        color = json_object_get(data,"color");
-        char *color_string = (char*)malloc(20*sizeof(char));
-        strcpy(color_string,json_string_value(color));
+        color = json_object_get(data, "color");
+        char *color_string = (char *) malloc(20 * sizeof(char));
+        strcpy(color_string, json_string_value(color));
 
         Color color_piece;
-        if(!strcmp(color_string,"black"))
+        if (!strcmp(color_string, "black"))
             color_piece = BLACK;
         else
             color_piece = WHITE;
@@ -120,25 +119,25 @@ int main(int argc, char *argv[]) {
 
         Piece *p;
         if (type_int == 0)
-            p = new King(x_int,y_int,color_piece);
+            p = new King(x_int, y_int, color_piece);
         if (type_int == 1)
-            p = new Queen(x_int,y_int,color_piece);
+            p = new Queen(x_int, y_int, color_piece);
         if (type_int == 2)
-            p = new Bishop(x_int,y_int,color_piece);
+            p = new Bishop(x_int, y_int, color_piece);
         if (type_int == 3)
-            p = new Rook(x_int,y_int,color_piece);
+            p = new Rook(x_int, y_int, color_piece);
         if (type_int == 4)
-            p = new Knight(x_int,y_int,color_piece);
+            p = new Knight(x_int, y_int, color_piece);
         if (type_int == 5)
-            p = new Pawn(x_int,y_int,color_piece);
+            p = new Pawn(x_int, y_int, color_piece);
 
         board->pushPiece(p);
 
     }
 
-    #pragma omp parallel
+#pragma omp parallel
     {
-        #pragma omp single
+#pragma omp single
         {
             Game game(board);
             game.init();
@@ -152,7 +151,7 @@ int main(int argc, char *argv[]) {
     FILE *output_file;
     output_file = fopen(output_value, "w");
 
-    json_dumpf(s->boards_json,output_file,0);
+    json_dumpf(s->boards_json, output_file, 0);
 
     fclose(output_file);
 
