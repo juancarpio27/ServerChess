@@ -20,8 +20,8 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
 
         //The new piece
         if ((*it) == piece) {
-            if (piece->getType() == 5 && move->getX() == 7) {
-                board->pushPiece(new Queen(7, move->getY(), WHITE));
+             if (piece->getType() == 5 && move->getY() == 7) {
+                board->pushPiece(new Queen(move->getX(), 7, WHITE));
             }
             else {
                 Piece *new_piece = (*it)->newPiece();
@@ -47,8 +47,8 @@ Board *Board::createBoard(Piece *piece, Move *move, bool incheck, int turns) {
 
         //The new piece
         if ((*it) == piece) {
-            if (piece->getType() == 5 && move->getX() == 0) {
-                board->pushPiece(new Queen(0, move->getY(), BLACK));
+             if (piece->getType() == 5 && move->getX() == 0) {
+                board->pushPiece(new Queen(move->getX(), 0, BLACK));
             }
             else {
                 Piece *new_piece = (*it)->newPiece();

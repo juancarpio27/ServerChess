@@ -10,12 +10,12 @@ std::vector<Move *> *Pawn::makeMove(Piece **matrix) {
     int factor = (color == WHITE) ? 1 : -1;
 
     if (matrix[(y) * 8 + (x+factor)] == nullptr)
-        pushToMoves(moves, x+factor, y);
+        pushToMoves(moves, x, y+factor);
 
-    if (matrix[(y+factor) * 8 + x + 1] != nullptr)
-        pushToMoves(moves, x + 1, y + factor, true);
-    if (matrix[(y+factor) * 8 + x - 1] != nullptr)
-        pushToMoves(moves, x - 1 , y + factor, true);
+    if (matrix[(y+1) * 8 + x + factor] != nullptr)
+        pushToMoves(moves, x + factor, y + 1, true);
+    if (matrix[(y-1) * 8 + x + factor] != nullptr)
+        pushToMoves(moves, x + factor , y - 1, true);
 
     return moves;
 }
