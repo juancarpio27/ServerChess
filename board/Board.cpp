@@ -589,7 +589,7 @@ json_t *Board::board_to_json() {
         json_object_set(piece, "x", x);
 
         json_t *y = json_integer((*it)->getY());
-        json_object_set(piece, "y", x);
+        json_object_set(piece, "y", y);
 
         json_t *piece_color = json_string("white");
         json_object_set(piece, "color", piece_color);
@@ -636,7 +636,7 @@ json_t *Board::board_to_json() {
         json_object_set(piece, "x", x);
 
         json_t *y = json_integer((*it)->getY());
-        json_object_set(piece, "y", x);
+        json_object_set(piece, "y", y);
 
         json_t *piece_color = json_string("black");
         json_object_set(piece, "color", piece_color);
